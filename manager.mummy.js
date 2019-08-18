@@ -12,6 +12,7 @@ module.exports = class PaintingManager extends Manager {
 
         let mummyRef = opts.fb.db.ref('museum/mummy')
 
+        // setup supported device output parsing
         let incoming = [
           {
             pattern:/count (.*)/,
@@ -25,6 +26,7 @@ module.exports = class PaintingManager extends Manager {
 
         super({ ...opts, bt: bt, handlers: handlers, incoming:incoming })
 
+        // setup supported commands
         handlers['mummy.test'] = this.mummyTest
         handlers['mummy.set'] = this.mummyTest
 
