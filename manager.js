@@ -5,6 +5,7 @@ module.exports = class Manager {
         this.bluetoothEnabled = opts.bt != null
         this.fb = opts.fb
         this.handlers = opts.handlers
+        this.incoming = opts.incoming
         this.name = opts.name
         this.logPrefix = 'handler: ' + opts.name + ': '
         this.created = (new Date()).getTime()
@@ -64,14 +65,14 @@ module.exports = class Manager {
                 return
             }
 
-            this.handlers.forEach((handler) => {
-                if (handler.canHandle(snapshot)) {
-                    this.runningOp = snapshot
-                    this.logger.log(this.logPrefix + 'handling ' + op.command + ' ...')
-                    handler.handle(snapshot, () => {
-                        this.activity()
-                        this.runningOp = null;
-                    })
+            Object.keys(this.handlers).forEach((hp) => {
+                if (snapshot.val().command == hp) {
+                  this.runningOp = snapshot
+                  this.logger.log(this.logPrefix + 'handling ' + op.command + ' ...')
+                  this.handlers[hp](snapshot, () => {
+                    this.activity()
+                    this.runningOp = null;
+                  })
                 }
             })
         } catch(e) {
@@ -105,9 +106,12 @@ module.exports = class Manager {
 
             // handle the line now
             let lineHandled = false
-            this.handlers.forEach((handler) => {
-                if (handler.response) {
-                    lineHandled = lineHandled || handler.response(line)
+
+            this.incoming.forEach(p => {
+                let match = p.pattern.exec(line)
+                if (match) {
+                    p.match(match)
+                    lineHandled = true;
                 }
             })
 
@@ -122,8 +126,8 @@ module.exports = class Manager {
     handle(snapshot) {
 
         // only push operations that can be handled by this manager
-        this.handlers.forEach((handler) => {
-            if (handler.canHandle(snapshot)) {
+        Object.keys(this.handlers).forEach((hp) => {
+            if (snapshot.val().command == hp) {
                 this.operations.push(snapshot)
             }
         })
