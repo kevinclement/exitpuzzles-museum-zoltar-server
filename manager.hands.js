@@ -1,17 +1,17 @@
 let Manager = require('./manager')
 
-module.exports = class MummyManager extends Manager {
+module.exports = class HandsManager extends Manager {
     constructor(opts) {
 
         // TODO: switch to real device
         let bt = new (require('./bluetooth.mock'))({
             name: opts.name,
-            address: '3C:71:BF:6C:73:A6',
+            address: '00:00:00:00:00:00',
             channel: 1,
             logger: opts.logger
         });
 
-        let mummyRef = opts.fb.db.ref('museum/mummy')
+        let mummyRef = opts.fb.db.ref('museum/hands')
 
         // setup supported device output parsing
         let incoming = [
@@ -28,15 +28,14 @@ module.exports = class MummyManager extends Manager {
         super({ ...opts, bt: bt, handlers: handlers, incoming:incoming })
 
         // setup supported commands
-        handlers['mummy.test'] = this.mummyTest
-        handlers['mummy.set'] = this.mummyTest
+        handlers['hands.test'] = this.test
 
         this.mummyRef = mummyRef
         this.logger = opts.logger;
     }
 
-    mummyTest(snapshot, cb) {
-        console.log("mummy test function!");
+    test(snapshot, cb) {
+        console.log("test function!");
         cb();
     }
 

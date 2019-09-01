@@ -1,6 +1,7 @@
 let fb = new (require('./firebase'))
 let logger = new (require('./logging'))
-let mummy = new (require('./manager.mummy'))({ name: 'mummy', logger: logger, fb: fb })
+//let mummy = new (require('./manager.mummy'))({ name: 'mummy', logger: logger, fb: fb })
+let hands = new (require('./manager.hands'))({ name: 'hands', logger: logger, fb: fb })
 
 // might want to turn this off while doing dev, so I have a flag for it
 let ENABLE_FIREBASE_LOGS = true;
@@ -14,8 +15,8 @@ logger.log('pi: Started ExitPuzzles Zoltar server.');
 fb.db.ref('museum/operations').orderByChild('completed').equalTo(null).on("child_added", function(snapshot) {
     logger.log('pi: received op ' + snapshot.val().command);
 
-    // send to mummy device
-    mummy.handle(snapshot);
+    //mummy.handle(snapshot);
+    hands.handle(snapshot);
  });
 
 // update started time and set a ping timer

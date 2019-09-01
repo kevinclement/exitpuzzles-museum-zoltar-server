@@ -1,3 +1,10 @@
+const readline = require('readline');
+var rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    terminal: false
+});
+
 module.exports = class BluetoothMock {
     constructor(opts) {
         this.logger = opts.logger;
@@ -9,6 +16,12 @@ module.exports = class BluetoothMock {
         this.connectionStartTime = null;
         this.onLine = this.onLine.bind(this);
         this.buffer = new (require('./buffer'))(this.onLine);
+        var bf = this.buffer;
+
+        // hookup stdin to buffer to fake bluetooth output
+        rl.on('line', function(str) { 
+            bf.onData(str + '\r\n');
+        });
     }
 
     connect(cb) {
@@ -20,7 +33,7 @@ module.exports = class BluetoothMock {
             this.open = true;
             this.connectionStartTime = null;
             if (cb) cb();
-        }, 5000)
+        }, 500)
     }
 
     isConnecting() {
