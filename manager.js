@@ -40,13 +40,6 @@ module.exports = class Manager {
 
                     // remove any pending operations (by design/user ask)
                     this.clearOperations()
-
-                    // remove any old listeners in case of reconnect
-                    this.buffer.reset()
-                    this.bt.rfcomm.removeListener('data', this.buffer.onData);
-
-                    // hookup new data handler
-                    this.bt.rfcomm.on('data', this.buffer.onData);
                 })
                 return;
             }

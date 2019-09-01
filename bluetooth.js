@@ -40,6 +40,8 @@ module.exports = class Bluetooth {
             this.logger.log(this.logPrefix + 'Connected.');
             this.connectionStartTime = null;
 
+            // TODO: prove this works on reconnect since I removed similar logic from manager
+
             // hookup data streaming for pure logging
             this.rfcomm.on('data', this.buffer.onData)
 

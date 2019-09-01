@@ -1,9 +1,10 @@
 let Manager = require('./manager')
 
-module.exports = class PaintingManager extends Manager {
+module.exports = class MummyManager extends Manager {
     constructor(opts) {
 
-        let bt = new (require('./bluetooth'))({
+        // TODO: switch to real device
+        let bt = new (require('./bluetooth.mock'))({
             name: opts.name,
             address: '3C:71:BF:6C-73-A6',
             channel: 1,
