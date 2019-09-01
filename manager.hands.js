@@ -22,7 +22,7 @@ module.exports = class HandsManager extends Manager {
           {
             pattern:/hands:(.*)/,
             match: (m) => {
-                opts.logger.log(`updating isPressed to ${m[1]}.`)
+                opts.logger.log(this.logPrefix + `updating isPressed to ${m[1]}.`)
                 dbRef.update({ 'isPressed': m[1] == "true" })
             }
           }
@@ -30,16 +30,28 @@ module.exports = class HandsManager extends Manager {
         let handlers = {};
 
         super({ ...opts, bt: bt, handlers: handlers, incoming:incoming })
+        this.forceHands = this.forceHands.bind(this)
 
         // setup supported commands
-        handlers['hands.test'] = this.test
+        handlers['hands.force'] = this.forceHands
 
         this.dbRef = dbRef;
         this.logger = opts.logger;
     }
 
-    test(snapshot, cb) {
-        console.log("test function!");
+    forceHands(snapshot, cb) {
+        let forced = snapshot.val().data.forced;
+
+        this.logger.log(this.logPrefix + `received force command with forced=${forced}`);
+
+        // TODO: actually make call to bluetooth
+        //       should send force to device and it should output its state, which will then update the db
+        //       the device should handle the case where force is enabled, and when it is, not update the device or status
+        this.dbRef.update({
+            forcePressed: forced,
+            isPressed: forced
+        });
+
         cb();
     }
 
