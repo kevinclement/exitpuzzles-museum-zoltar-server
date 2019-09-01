@@ -11,16 +11,19 @@ module.exports = class HandsManager extends Manager {
             logger: opts.logger
         });
 
-        let mummyRef = opts.fb.db.ref('museum/hands')
+        let dbRef = opts.fb.db.ref('museum/hands')
+
+        // mock:
+        //   hands:true
+        //   hands:false
 
         // setup supported device output parsing
         let incoming = [
           {
-            pattern:/count (.*)/,
+            pattern:/hands:(.*)/,
             match: (m) => {
-                // do some updates 
-                // m[1]
-                console.log(`found count match ${m[1]}\n`)
+                opts.logger.log(`updating isPressed to ${m[1]}.`)
+                dbRef.update({ 'isPressed': m[1] == "true" })
             }
           }
         ]
@@ -31,7 +34,7 @@ module.exports = class HandsManager extends Manager {
         // setup supported commands
         handlers['hands.test'] = this.test
 
-        this.mummyRef = mummyRef
+        this.dbRef = dbRef;
         this.logger = opts.logger;
     }
 
@@ -41,20 +44,20 @@ module.exports = class HandsManager extends Manager {
     }
 
     activity() {
-         this.mummyRef.update({
+         this.dbRef.update({
              lastActivity: (new Date()).toLocaleString()
         })
     }
 
     connecting() {
         // NOTE: while connecting, mark device as disabled, since it defaults to that
-        this.mummyRef.update({
+        this.dbRef.update({
             isConnected: false
         })
     }
 
     connected() {
-        this.mummyRef.update({
+        this.dbRef.update({
             isConnected: true
         })
     }
