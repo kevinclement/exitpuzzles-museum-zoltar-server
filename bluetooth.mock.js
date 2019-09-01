@@ -10,6 +10,7 @@ module.exports = class BluetoothMock {
         this.logger = opts.logger;
         this.address = opts.address;
         this.channel = opts.channel;
+        this.outputCallback = undefined;
         this.logPrefix = 'bluetooth: ' + opts.name + ': ';
 
         this.open = false;
@@ -36,6 +37,10 @@ module.exports = class BluetoothMock {
         }, 500)
     }
 
+    setOutputCallback(cb) {
+        this.outputCallback = cb;
+    }
+
     isConnecting() {
         if (!this.connectionStartTime) return false;
 
@@ -48,6 +53,9 @@ module.exports = class BluetoothMock {
 
     onLine(line) {
         this.logger.log(this.logPrefix + '< ' + line);
+        if (this.outputCallback) {
+            this.outputCallback(line);
+        }
     }
 
     write(msg, cb) {

@@ -18,10 +18,12 @@ module.exports = class Manager {
 
         // bind this proper for timer
         this.loop = this.loop.bind(this)
-        this.onLine = this.onLine.bind(this)
+        this.output = this.output.bind(this)
 
         // hookup buffer line parser
-        this.buffer = new (require('./buffer'))(this.onLine)
+        if (this.bluetoothEnabled) { 
+            this.bt.setOutputCallback(this.output);
+        }
 
         // main loop to process operations
         setInterval(this.loop, 100)
@@ -93,7 +95,7 @@ module.exports = class Manager {
         snapshot.ref.update({ 'completed': now, 'canceled': now })
     }
 
-    onLine(line) {
+    output(line) {
         try {
             this.activity()
 
@@ -112,7 +114,7 @@ module.exports = class Manager {
                 this.logger.log(this.logPrefix + 'WARN: no handler processed line \'' + line + '\' ...')
             }
         } catch(e) {
-            this.logger.logger.error(this.logPrefix + 'Exception during online: ' + e.message);
+            this.logger.logger.error(this.logPrefix + 'Exception during ouput: ' + e.message);
         }
     }
 

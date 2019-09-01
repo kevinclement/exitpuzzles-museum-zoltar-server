@@ -20,6 +20,7 @@ module.exports = class HandsManager extends Manager {
             match: (m) => {
                 // do some updates 
                 // m[1]
+                console.log(`found count match ${m[1]}\n`)
             }
           }
         ]
