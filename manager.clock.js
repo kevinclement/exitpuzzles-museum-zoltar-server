@@ -14,16 +14,21 @@ module.exports = class ClockManager extends Manager {
         let dbRef = opts.fb.db.ref('museum/clock')
 
         // mock:
-        //   TODO: parse hours/minutes state updates
-        //   xx:yy,aa:bb
+        //   opened:false,time:01:12
+        //   opened:true,time:11:05
 
         // setup supported device output parsing
         let incoming = [
           {
-            pattern:/clock_xx_yy:(.*)/,
+            pattern:/opened\:(.*),time\:(\d+)\:(\d+)/,
             match: (m) => {
-                opts.logger.log(this.logPrefix + `updating isPressed to ${m[1]}.`)
-                dbRef.update({ 'isPressed': m[1] == "true" })
+                opts.logger.log(this.logPrefix + `got clock state opened:${m[1]} hours:${m[2]} minutes:${m[3]}.`)
+                dbRef.update(
+                { 
+                  isOpened: m[1] == "true",
+                  hours: m[2],
+                  minutes: m[3]
+                })
             }
           }
         ]
