@@ -3,9 +3,10 @@ let Manager = require('./manager')
 module.exports = class LaserManager extends Manager {
     constructor(opts) {
 
+        // Bluetooth device name: ExitMuseumLaser
         let bt = new (require('./serial.bluetooth'))({
             name: opts.name,
-            address: '00:00:00:00:00:00',
+            address: '3C:71:BF:83:D8:76',
             channel: 1,
             logger: opts.logger
         });
