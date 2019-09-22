@@ -7,12 +7,12 @@
   "scripts": {
     "dev": "node index.js",
     "verbose": "DEBUG=true node index.js",
-
     "stop": "sudo systemctl stop exitpuzzles.zoltar.service",
     "start": "sudo systemctl start exitpuzzles.zoltar.service",
     "status": "sudo systemctl status exitpuzzles.zoltar.service"
   },
   "dependencies": {
+    "bluetooth-serial-port": "^2.2.6",
     "firebase": "^6.4.0",
     "serialport": "^7.1.5",
     "winston": "^3.2.1"

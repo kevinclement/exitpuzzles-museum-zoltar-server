@@ -19,28 +19,41 @@ module.exports = class LaserManager extends Manager {
         super({ ...opts, bt: bt, handlers: handlers, incoming:incoming })
 
         // setup supported commands
-        handlers['laser.on'] = (s,cb) => { 
-            bt.write('enable');
-            cb();
+        handlers['laser.enable'] = (s,cb) => {
+            bt.write('enable', (err) => {
+                if (err) {
+                    s.ref.update({ 'error': err });
+                } else {
+                    // toggle db here so we don't bounce the ui waiting for the output
+                    ref.update({ enabled: true })
+                }
+                cb()
+            });
+        }
+        handlers['laser.disable'] = (s,cb) => { 
+            bt.write('disable', (err) => {
+                if (err) {
+                    s.ref.update({ 'error': err });
+                } else {
+                    // toggle db here so we don't bounce the ui waiting for the output
+                    ref.update({ enabled: false })
+                }
+                cb()
+            });
         }
 
         // setup supported device output parsing
         incoming.push(
         {
-            pattern:/.*status=(.*)/,
+            pattern:/.*turning on laser.*/,
             match: (m) => {
-                m[1].split(',').forEach((s)=> {
-                    let p = s.split(':');
-                    switch(p[0]) {
-                        case "solved": 
-                            // this.solved = (p[1] === 'true')
-                            break
-                    }
-                })
-
-                // opts.fb.db.ref('museum/mummy').update({
-                //     opened: this.solved
-                // })
+                ref.update({ enabled: true })
+            }
+        },
+        {
+            pattern:/.*turning off laser.*/,
+            match: (m) => {
+                ref.update({ enabled: false })
             }
         });
 
