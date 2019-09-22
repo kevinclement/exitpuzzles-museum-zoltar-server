@@ -1,76 +1,71 @@
 let Manager = require('./manager')
 
-module.exports = class HandsManager extends Manager {
+module.exports = class LaserManager extends Manager {
     constructor(opts) {
 
-        // TODO: switch to real device
-        let bt = new (require('./bluetooth.mock'))({
+        let bt = new (require('./serial.bluetooth'))({
             name: opts.name,
             address: '00:00:00:00:00:00',
             channel: 1,
             logger: opts.logger
         });
 
-        let dbRef = opts.fb.db.ref('museum/hands')
+        let ref = opts.fb.db.ref('museum/laser')
 
-        // mock:
-        //   hands:true
-        //   hands:false
-
-        // setup supported device output parsing
-        let incoming = [
-          {
-            pattern:/hands:(.*)/,
-            match: (m) => {
-                opts.logger.log(this.logPrefix + `updating isPressed to ${m[1]}.`)
-                dbRef.update({ 'isPressed': m[1] == "true" })
-            }
-          }
-        ]
+        let incoming = [];
         let handlers = {};
 
         super({ ...opts, bt: bt, handlers: handlers, incoming:incoming })
-        this.forceHands = this.forceHands.bind(this)
 
         // setup supported commands
-        handlers['hands.force'] = this.forceHands
+        handlers['laser.on'] = (s,cb) => { 
+            bt.write('enable');
+            cb();
+        }
 
-        this.dbRef = dbRef;
-        this.logger = opts.logger;
-    }
+        // setup supported device output parsing
+        incoming.push(
+        {
+            pattern:/.*status=(.*)/,
+            match: (m) => {
+                m[1].split(',').forEach((s)=> {
+                    let p = s.split(':');
+                    switch(p[0]) {
+                        case "solved": 
+                            // this.solved = (p[1] === 'true')
+                            break
+                    }
+                })
 
-    forceHands(snapshot, cb) {
-        let forced = snapshot.val().data.forced;
-
-        this.logger.log(this.logPrefix + `received force command with forced=${forced}`);
-
-        // TODO: actually make call to bluetooth
-        //       should send force to device and it should output its state, which will then update the db
-        //       the device should handle the case where force is enabled, and when it is, not update the device or status
-        this.dbRef.update({
-            forcePressed: forced,
-            isPressed: forced
+                // opts.fb.db.ref('museum/mummy').update({
+                //     opened: this.solved
+                // })
+            }
         });
 
-        cb();
-    }
+        this.ref = ref
+        this.serial = bt
+        this.logger = opts.logger
 
+        this.enabled = false
+    }
+    
     activity() {
-         this.dbRef.update({
-             lastActivity: (new Date()).toLocaleString()
-        })
+        this.ref.update({
+            lastActivity: (new Date()).toLocaleString()
+       })
     }
 
-    connecting() {
-        // NOTE: while connecting, mark device as disabled, since it defaults to that
-        this.dbRef.update({
-            isConnected: false
-        })
-    }
+   connecting() {
+       // NOTE: while connecting, mark device as disabled, since it defaults to that
+       this.ref.update({
+           isConnected: false
+       })
+   }
 
-    connected() {
-        this.dbRef.update({
-            isConnected: true
-        })
+   connected() {
+       this.ref.update({
+           isConnected: true
+       })
     }
 }
