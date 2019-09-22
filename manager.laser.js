@@ -1,6 +1,6 @@
 let Manager = require('./manager')
 
-module.exports = class ClockManager extends Manager {
+module.exports = class HandsManager extends Manager {
     constructor(opts) {
 
         // TODO: switch to real device
@@ -11,45 +11,45 @@ module.exports = class ClockManager extends Manager {
             logger: opts.logger
         });
 
-        let dbRef = opts.fb.db.ref('museum/clock')
+        let dbRef = opts.fb.db.ref('museum/hands')
 
         // mock:
-        //   opened:false,time:01:12
-        //   opened:true,time:11:05
+        //   hands:true
+        //   hands:false
 
         // setup supported device output parsing
         let incoming = [
           {
-            pattern:/opened\:(.*),time\:(\d+)\:(\d+)/,
+            pattern:/hands:(.*)/,
             match: (m) => {
-                opts.logger.log(this.logPrefix + `got clock state opened:${m[1]} hours:${m[2]} minutes:${m[3]}.`)
-                dbRef.update(
-                { 
-                  isOpened: m[1] == "true",
-                  hours: m[2],
-                  minutes: m[3]
-                })
+                opts.logger.log(this.logPrefix + `updating isPressed to ${m[1]}.`)
+                dbRef.update({ 'isPressed': m[1] == "true" })
             }
           }
         ]
         let handlers = {};
 
         super({ ...opts, bt: bt, handlers: handlers, incoming:incoming })
-        this.openDoor = this.openDoor.bind(this)
+        this.forceHands = this.forceHands.bind(this)
 
         // setup supported commands
-        handlers['clock.open'] = this.openDoor
+        handlers['hands.force'] = this.forceHands
 
         this.dbRef = dbRef;
         this.logger = opts.logger;
     }
 
-    openDoor(snapshot, cb) {
-        this.logger.log(this.logPrefix + `received open door command.`);
+    forceHands(snapshot, cb) {
+        let forced = snapshot.val().data.forced;
+
+        this.logger.log(this.logPrefix + `received force command with forced=${forced}`);
 
         // TODO: actually make call to bluetooth
+        //       should send force to device and it should output its state, which will then update the db
+        //       the device should handle the case where force is enabled, and when it is, not update the device or status
         this.dbRef.update({
-            isOpened: true
+            forcePressed: forced,
+            isPressed: forced
         });
 
         cb();
