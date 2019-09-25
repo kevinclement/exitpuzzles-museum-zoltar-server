@@ -2,14 +2,10 @@ const path = require('path');
 const escpos = require('escpos');
 
 const options = { }
-// TODO: uncomment once printer is plugged in
 // const device  = new escpos.USB();
 // const printer = new escpos.Printer(device, options);
 
 const solvedTicket = path.join(__dirname, 'zoltar-solved-ticket.jpg'); 
-escpos.Image.load(solvedTicket, function(image){
-    console.log('escpos image loaded');
-});
 
 module.exports = class Printer {
     constructor(opts) {
@@ -19,12 +15,16 @@ module.exports = class Printer {
 
     print(cb) {
         this.logger.log(this.logPrefix + 'printing solved ticket...')
-        // device.open(() => {
-        //     printer
-        //         .align('ct')
-        //         .raster(image)
-        //         .cut()
-        //         .close()
-        // })
+
+        // TODO: preload this when app starts and not when printing
+        escpos.Image.load(solvedTicket, function(image){
+            // device.open(() => {
+            //     printer
+            //         .align('ct')
+            //         .raster(image)
+            //         .cut()
+            //         .close()
+            // })
+        });
     }
 }

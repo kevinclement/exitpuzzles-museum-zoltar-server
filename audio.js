@@ -1,3 +1,4 @@
+const path = require('path');
 var player = require('play-sound')(opts = { player: 'aplay' })
 
 module.exports = class Audio {
@@ -30,9 +31,8 @@ module.exports = class Audio {
     }
 
     dequeueAndPlay(cb) {
-        let fileName =  this.queue.shift()
-        // TODO: fix this
-        let fullFile = '/home/pi/code/zoltar-server/audio/' + fileName
+        let fileName = this.queue.shift()
+        let fullFile = path.join(__dirname, 'audio', fileName); 
 
         this.logger.log('audio: playing \'' + fileName + '\'...')
         this.playing = true
