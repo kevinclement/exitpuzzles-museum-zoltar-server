@@ -67,7 +67,7 @@ module.exports = class CoinManager extends Manager {
                     }
                 })
 
-                ref.child('info').update({
+                ref.child('info/build').update({
                     version: this.version,
                     date: this.buildDate,
                     gitDate: this.gitDate
