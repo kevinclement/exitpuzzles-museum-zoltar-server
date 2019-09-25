@@ -11,7 +11,7 @@ module.exports = class LaserManager extends Manager {
             logger: opts.logger
         });
 
-        let ref = opts.fb.db.ref('museum/laser')
+        let ref = opts.fb.db.ref('museum/devices/laser')
 
         let incoming = [];
         let handlers = {};
