@@ -17,6 +17,14 @@ module.exports = class CoinManager extends Manager {
         super({ ...opts, bt: bt, handlers: handlers, incoming:incoming })
 
         // setup supported commands
+        handlers['zoltar.increment'] = (s,cb) => { 
+            bt.write('increment');
+            cb();
+        }
+        handlers['zoltar.decrement'] = (s,cb) => { 
+            bt.write('decrement');
+            cb();
+        }
         handlers['zoltar.reboot'] = (s,cb) => { 
             bt.write('reboot');
             cb();
