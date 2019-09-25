@@ -23,6 +23,10 @@ module.exports = class HandsManager extends Manager {
         }
         handlers['hands.toggle'] = (s,cb) => { 
             bt.write('mock');
+
+            // optimistic update to db, so it doesn't flip back and forth
+            ref.update({ mock: !this.mock })
+
             cb();
         }
 
@@ -49,6 +53,9 @@ module.exports = class HandsManager extends Manager {
                         case "touching": 
                             this.touching = (p[1] === 'true')
                             break
+                        case "mock": 
+                            this.mock = (p[1] === 'true')
+                            break
                     }
                 })
 
@@ -58,7 +65,8 @@ module.exports = class HandsManager extends Manager {
                         date: this.buildDate,
                         gitDate: this.gitDate
                     },
-                    touching: this.touching
+                    touching: this.touching,
+                    mock: this.mock
                 })
             }
         });
@@ -68,6 +76,7 @@ module.exports = class HandsManager extends Manager {
         this.logger = opts.logger
 
         this.touching = false
+        this.mock = false
         this.version = "unknown"
         this.gitDate = "unknown"
         this.buildDate = "unknown"
