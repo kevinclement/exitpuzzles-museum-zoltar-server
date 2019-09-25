@@ -16,6 +16,15 @@ if (ENABLE_FIREBASE_LOGS) {
 
 logger.log('pi: Started ExitPuzzles Zoltar server.');
 
+// track firebase connect and disconnects and log them so we can see how often it happens
+fb.db.ref('.info/connected').on('value', function(connectedSnap) {
+  if (connectedSnap.val() === true) {
+    logger.log('pi: firebase connected.');
+  } else {
+    logger.log('pi: firebase dropped connection!');
+  }
+});
+
 // listen for control operations in the db, filter only ops not completed
 fb.db.ref('museum/operations').orderByChild('completed').equalTo(null).on("child_added", function(snapshot) {
     logger.log('pi: received op ' + snapshot.val().command);
