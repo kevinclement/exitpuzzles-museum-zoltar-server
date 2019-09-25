@@ -67,12 +67,13 @@ module.exports = class CoinManager extends Manager {
                     }
                 })
 
+                ref.child('info').update({
+                    version: this.version,
+                    date: this.buildDate,
+                    gitDate: this.gitDate
+                })
+
                 ref.update({
-                    build: {
-                        version: this.version,
-                        date: this.buildDate,
-                        gitDate: this.gitDate
-                    },
                     solved: this.solved,
                     coins: this.coins,
                     donations: this.donations
@@ -95,7 +96,7 @@ module.exports = class CoinManager extends Manager {
     }
 
     activity() {
-         this.ref.update({
+         this.ref.child('info').update({
              lastActivity: (new Date()).toLocaleString()
         })
     }
@@ -131,7 +132,7 @@ module.exports = class CoinManager extends Manager {
 
     connecting() {
         // NOTE: while connecting, mark device as disabled, since it defaults to that
-        this.ref.update({
+        this.ref.child('info').update({
             isConnected: false
         })
     }
@@ -151,7 +152,7 @@ module.exports = class CoinManager extends Manager {
         // }, 3000);
         // -----------------------------------
 
-        this.ref.update({
+        this.ref.child('info').update({
             isConnected: true
         })
     }

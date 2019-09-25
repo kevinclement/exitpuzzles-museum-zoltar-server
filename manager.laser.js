@@ -65,20 +65,20 @@ module.exports = class LaserManager extends Manager {
     }
     
     activity() {
-        this.ref.update({
+        this.ref.child('info').update({
             lastActivity: (new Date()).toLocaleString()
        })
     }
 
    connecting() {
        // NOTE: while connecting, mark device as disabled, since it defaults to that
-       this.ref.update({
+       this.ref.child('info').update({
            isConnected: false
        })
    }
 
    connected() {
-       this.ref.update({
+       this.ref.child('info').update({
            isConnected: true
        })
     }

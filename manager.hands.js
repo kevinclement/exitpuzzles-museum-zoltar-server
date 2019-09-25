@@ -59,12 +59,13 @@ module.exports = class HandsManager extends Manager {
                     }
                 })
 
+                ref.child('info').update({
+                    version: this.version,
+                    date: this.buildDate,
+                    gitDate: this.gitDate
+                })
+
                 ref.update({
-                    build: {
-                        version: this.version,
-                        date: this.buildDate,
-                        gitDate: this.gitDate
-                    },
                     touching: this.touching,
                     mock: this.mock
                 })
@@ -83,21 +84,21 @@ module.exports = class HandsManager extends Manager {
     }
 
     activity() {
-         this.ref.update({
+         this.ref.child('info').update({
              lastActivity: (new Date()).toLocaleString()
         })
     }
 
     connecting() {
         // NOTE: while connecting, mark device as disabled, since it defaults to that
-        this.ref.update({
+        this.ref.child('info').update({
             isConnected: false
         })
     }
 
     connected() {
 
-        this.ref.update({
+        this.ref.child('info').update({
             isConnected: true
         })
     }
