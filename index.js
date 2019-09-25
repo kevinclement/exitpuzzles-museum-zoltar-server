@@ -1,9 +1,10 @@
 let fb = new (require('./firebase'))
 let logger = new (require('./logging'))
+let audio = new (require('./audio'))({ logger: logger })
 
 let managers = [];
 managers.push(new (require('./manager.laser'))({ name: 'laser', logger: logger, fb: fb }))
-managers.push(new (require('./manager.coin'))({ name: 'zoltar', logger: logger, fb: fb }))
+managers.push(new (require('./manager.coin'))({ name: 'zoltar', logger: logger, fb: fb, audio:audio }))
 
 // might want to turn this off while doing dev, so I have a flag for it
 let ENABLE_FIREBASE_LOGS = true;
