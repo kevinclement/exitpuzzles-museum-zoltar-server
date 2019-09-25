@@ -84,6 +84,7 @@ module.exports = class CoinManager extends Manager {
         this.serial = bt
         this.logger = opts.logger
         this.audio = opts.audio
+        this.printer = opts.printer
 
         this.solved = false
         this.version = "unknown"
@@ -117,6 +118,7 @@ module.exports = class CoinManager extends Manager {
     allCoins() {
         this.logger.log(this.logPrefix + 'solved.')
         this.play("success.wav")
+        this.printer.print(() => {})
     }
 
     play(fName, cb) {
@@ -140,14 +142,14 @@ module.exports = class CoinManager extends Manager {
         // TMP -------------------------------
         setTimeout(() => {
             this.bt.write('i');
+        }, 1000);
+        setTimeout(() => {
+            this.bt.write('i');
+        }, 2000);
+        setTimeout(() => {
+            this.bt.write('i');
         }, 3000);
-        setTimeout(() => {
-            this.bt.write('i');
-        }, 5000);
-        setTimeout(() => {
-            this.bt.write('i');
-        }, 8000);
-        // TMP -------------------------------
+        // -----------------------------------
 
         this.ref.update({
             isConnected: true
