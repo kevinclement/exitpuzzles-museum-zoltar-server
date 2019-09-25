@@ -43,10 +43,18 @@ module.exports = class CoinManager extends Manager {
                             this.buildDate = p[1]
                             break
                         case "coins": 
-                            this.coins = parseInt(p[1])
+                            let nCoins = parseInt(p[1]);
+                            if (this.coins != nCoins) {
+                                this.coinChange()
+                            }
+                            this.coins = nCoins
                             break
                         case "donations": 
-                            this.donations = parseInt(p[1])
+                            let nDonations = parseInt(p[1])
+                            if (this.donations != nDonations) {
+                                this.donationChange()
+                            }
+                            this.donations = nDonations
                             break
                     }
                 })
@@ -80,6 +88,14 @@ module.exports = class CoinManager extends Manager {
          this.ref.update({
              lastActivity: (new Date()).toLocaleString()
         })
+    }
+
+    coinChange() {
+        console.log('got coins')
+    }
+    
+    donationChange() {
+        console.log('got donation')
     }
 
     connecting() {
