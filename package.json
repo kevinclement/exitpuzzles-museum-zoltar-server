@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "node index.js",
     "verbose": "DEBUG=true node index.js",
+    
     "stop": "sudo systemctl stop exitpuzzles.zoltar.service",
     "start": "sudo systemctl start exitpuzzles.zoltar.service",
     "status": "sudo systemctl status exitpuzzles.zoltar.service"
