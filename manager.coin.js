@@ -140,15 +140,15 @@ module.exports = class CoinManager extends Manager {
         // No need to get status since its arduino and it restarts on connection
 
         // TMP -------------------------------
-        setTimeout(() => {
-            this.bt.write('i');
-        }, 1000);
-        setTimeout(() => {
-            this.bt.write('i');
-        }, 2000);
-        setTimeout(() => {
-            this.bt.write('i');
-        }, 3000);
+        // setTimeout(() => {
+        //     this.bt.write('i');
+        // }, 1000);
+        // setTimeout(() => {
+        //     this.bt.write('i');
+        // }, 2000);
+        // setTimeout(() => {
+        //     this.bt.write('i');
+        // }, 3000);
         // -----------------------------------
 
         this.ref.update({
