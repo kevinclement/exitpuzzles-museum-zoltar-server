@@ -93,11 +93,10 @@ module.exports = class CoinManager extends Manager {
 
     coinChange() {
         this.logger.log(this.logPrefix + 'detected coin change...')
-        var cointCount = this.coins
+        var _solved = this.solved
         this.play("coin.wav", () => {
-            // coin count is still -1 at this point
-            if (cointCount == 2) {
-                this.play("success.wav")
+            if (_solved) {
+                this.allCoins()
             }
         })
     }
@@ -105,6 +104,11 @@ module.exports = class CoinManager extends Manager {
     donationChange() {
         this.logger.log(this.logPrefix + 'detected donation...')
         this.play("donation.wav")
+    }
+
+    allCoins() {
+        this.logger.log(this.logPrefix + 'solved.')
+        this.play("success.wav")
     }
 
     play(fName, cb) {
