@@ -92,20 +92,17 @@ module.exports = class CoinManager extends Manager {
     }
 
     coinChange() {
-        console.log('got coins')
+        this.logger.log(this.logPrefix + 'detected coin change...')
+        this.play("coin.wav")
     }
 
     donationChange() {
-        console.log('got donation')
+        this.logger.log(this.logPrefix + 'detected donation...')
+        this.play("donation.wav")
     }
 
-    play() {
-        // TMP
-        let fileName = "tmpahah.wav"
-
-        console.log('playing audio')
-        this.audio.play(fileName, (err) => {
-            console.log('audio played')
+    play(fName) {
+        this.audio.play(fName, (err) => {
         })
     }
 
@@ -121,7 +118,6 @@ module.exports = class CoinManager extends Manager {
 
         // TMP -------------------------------
         setTimeout(() => {
-            this.play();
             this.bt.write('i');
         }, 4000);
         // TMP -------------------------------
