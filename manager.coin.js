@@ -75,6 +75,7 @@ module.exports = class CoinManager extends Manager {
         this.ref = ref
         this.serial = bt
         this.logger = opts.logger
+        this.audio = opts.audio
 
         this.solved = false
         this.version = "unknown"
@@ -93,9 +94,19 @@ module.exports = class CoinManager extends Manager {
     coinChange() {
         console.log('got coins')
     }
-    
+
     donationChange() {
         console.log('got donation')
+    }
+
+    play() {
+        // TMP
+        let fileName = "tmpahah.wav"
+
+        console.log('playing audio')
+        this.audio.play(fileName, (err) => {
+            console.log('audio played')
+        })
     }
 
     connecting() {
@@ -110,6 +121,7 @@ module.exports = class CoinManager extends Manager {
 
         // TMP -------------------------------
         setTimeout(() => {
+            this.play();
             this.bt.write('i');
         }, 4000);
         // TMP -------------------------------
