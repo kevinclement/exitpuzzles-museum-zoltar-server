@@ -19,3 +19,6 @@ Afterwards, should be able to 'shutdown -r now' and see it come online with ssh 
 ```
 sudo systemctl stop exitpuzzles.zoltar.service
 ```
+
+### to get udev rule info 
+sudo udevadm info /dev/ttyUSB1
