@@ -20,11 +20,17 @@ if (ENABLE_FIREBASE_LOGS) {
 logger.log('pi: Started ExitPuzzles Zoltar server.');
 
 // track firebase connect and disconnects and log them so we can see how often it happens
+let _connecting = true;
 fb.db.ref('.info/connected').on('value', function(connectedSnap) {
   if (connectedSnap.val() === true) {
     logger.log('pi: firebase connected.');
   } else {
-    logger.log('pi: firebase dropped connection!');
+    // dont print an error while its still connecting on first start
+    if (_connecting) {
+      _connecting = false;
+    } else {
+      logger.log('pi: firebase dropped connection!');
+    }
   }
 });
 
