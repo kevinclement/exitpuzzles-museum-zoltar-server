@@ -32,6 +32,9 @@ module.exports = class CabinetManager extends Manager {
             bt.write('reboot', (err) => {
                 if (err) {
                     s.ref.update({ 'error': err });
+                } else {
+                    // go ahead and update the db and let it know we're disconnected since we will time out
+                    this.ref.child('info').update({ isConnected: false })
                 }
                 cb()
             });
