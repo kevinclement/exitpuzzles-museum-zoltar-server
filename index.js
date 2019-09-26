@@ -6,7 +6,10 @@ let printer = new (require('./printer'))({ logger: logger })
 let managers = [];
 managers.push(new (require('./manager.laser'))({ name: 'laser', logger: logger, fb: fb }))
 managers.push(new (require('./manager.coin'))({ name: 'zoltar', logger: logger, fb: fb, audio: audio, printer: printer }))
-managers.push(new (require('./manager.hands'))({ name: 'hands', logger: logger, fb: fb }))
+
+// **********  ADD THIS BACK WHEN PLUGGED BACK IN ****************************************************
+// managers.push(new (require('./manager.hands'))({ name: 'hands', logger: logger, fb: fb }))
+// ***************************************************************************************************
 
 // might want to turn this off while doing dev, so I have a flag for it
 let ENABLE_FIREBASE_LOGS = true;
