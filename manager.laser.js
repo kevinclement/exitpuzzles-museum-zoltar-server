@@ -79,7 +79,8 @@ module.exports = class LaserManager extends Manager {
 
    connected() {
        this.ref.child('info').update({
-           isConnected: true
+           isConnected: true,
+           lastActivity: (new Date()).toLocaleString()
        })
     }
 }

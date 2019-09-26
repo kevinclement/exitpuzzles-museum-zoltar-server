@@ -99,7 +99,8 @@ module.exports = class HandsManager extends Manager {
     connected() {
 
         this.ref.child('info').update({
-            isConnected: true
+            isConnected: true,
+            lastActivity: (new Date()).toLocaleString()
         })
     }
 }

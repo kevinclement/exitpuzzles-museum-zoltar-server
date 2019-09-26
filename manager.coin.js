@@ -153,7 +153,8 @@ module.exports = class CoinManager extends Manager {
         // -----------------------------------
 
         this.ref.child('info').update({
-            isConnected: true
+            isConnected: true,
+            lastActivity: (new Date()).toLocaleString()
         })
     }
 }
