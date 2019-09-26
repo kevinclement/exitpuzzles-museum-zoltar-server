@@ -20,5 +20,11 @@ Afterwards, should be able to 'shutdown -r now' and see it come online with ssh 
 sudo systemctl stop exitpuzzles.zoltar.service
 ```
 
-### to get udev rule info 
-sudo udevadm info /dev/ttyUSB1
+### udev
+#### to get udev rule info 
+```sudo udevadm info /dev/ttyUSB1```
+
+#### to restart without reboot
+```sudo udevadm control --reload-rules && sudo udevadm trigger```
+
+
