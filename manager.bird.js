@@ -20,6 +20,7 @@ module.exports = class BirdManager extends Manager {
 
         // setup supported commands
         handlers['bird.open'] = (s,cb) => {
+
             ref.update({ solved: true, trayOpened:true })
 	    cb()
 
