@@ -128,8 +128,7 @@ module.exports = class BirdManager extends Manager {
     }
 
     connected() {
-        // TODO: add back
-        //this.bt.write('status');
+        this.bt.write('status');
 
         this.ref.child('info').update({
             isConnected: true,
