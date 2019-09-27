@@ -20,7 +20,9 @@ module.exports = class BirdManager extends Manager {
 
         // setup supported commands
         handlers['bird.open'] = (s,cb) => {
-            ref.update({ opened: true })
+            ref.update({ solved: true, trayOpened:true })
+	    cb()
+
             // bt.write('solve', (err) => {
             //     if (err) {
             //         s.ref.update({ 'error': err });
@@ -31,7 +33,9 @@ module.exports = class BirdManager extends Manager {
 
         handlers['bird.close'] = (s,cb) => {
             // TMP FAKE
-            ref.update({ opened: false })
+            ref.update({ solved: false, trayOpened:false })
+            cb()
+
             // bt.write('solve', (err) => {
             //     if (err) {
             //         s.ref.update({ 'error': err });
