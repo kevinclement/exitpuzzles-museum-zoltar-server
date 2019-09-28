@@ -20,41 +20,51 @@ module.exports = class BirdManager extends Manager {
 
         // setup supported commands
         handlers['bird.open'] = (s,cb) => {
-
-            ref.update({ solved: true, trayOpened:true })
-	    cb()
-
-            // bt.write('solve', (err) => {
-            //     if (err) {
-            //         s.ref.update({ 'error': err });
-            //     }
-            //     cb()
-            // });
+            bt.write('solve', (err) => {
+                if (err) {
+                    s.ref.update({ 'error': err });
+                }
+                cb()
+            });
         }
 
         handlers['bird.close'] = (s,cb) => {
-            // TMP FAKE
-            ref.update({ solved: false, trayOpened:false })
-            cb()
+            bt.write('close', (err) => {
+                if (err) {
+                    s.ref.update({ 'error': err });
+                }
+                cb()
+            });
+        }
 
-            // bt.write('solve', (err) => {
-            //     if (err) {
-            //         s.ref.update({ 'error': err });
-            //     }
-            //     cb()
-            // });
+        handlers['bird.back'] = (s,cb) => {
+            bt.write('back', (err) => {
+                if (err) {
+                    s.ref.update({ 'error': err });
+                }
+                cb()
+            });
+        }
+
+        handlers['bird.forward'] = (s,cb) => {
+            bt.write('forward', (err) => {
+                if (err) {
+                    s.ref.update({ 'error': err });
+                }
+                cb()
+            });
         }
 
         handlers['bird.reboot'] = (s,cb) => {
-            // bt.write('reboot', (err) => {
-            //     if (err) {
-            //         s.ref.update({ 'error': err });
-            //     } else {
-            //         // go ahead and update the db and let it know we're disconnected since we will time out
-            //         this.ref.child('info').update({ isConnected: false })
-            //     }
-            //     cb()
-            // });
+            bt.write('reboot', (err) => {
+                if (err) {
+                    s.ref.update({ 'error': err });
+                } else {
+                    // go ahead and update the db and let it know we're disconnected since we will time out
+                    this.ref.child('info').update({ isConnected: false })
+                }
+                cb()
+            });
         }
 
         // setup supported device output parsing
