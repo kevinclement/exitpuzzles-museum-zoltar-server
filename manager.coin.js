@@ -52,14 +52,14 @@ module.exports = class CoinManager extends Manager {
                             break
                         case "coins": 
                             let nCoins = parseInt(p[1]);
-                            if (this.coins != nCoins) {
+                            if (this.coins != nCoins && this.coins < nCoins) {
                                 this.coinChange()
                             }
                             this.coins = nCoins
                             break
                         case "donations": 
                             let nDonations = parseInt(p[1])
-                            if (this.donations != nDonations) {
+                            if (this.donations != nDonations && this.donations < nDonations) {
                                 this.donationChange()
                             }
                             this.donations = nDonations
