@@ -34,9 +34,11 @@ module.exports = class Audio {
         let fileName = this.queue.shift()
         let fullFile = path.join(__dirname, 'audio', fileName); 
 
+        let device = fileName == "coin.wav" ? "softvol" : "hw"
+
         this.logger.log('audio: playing \'' + fileName + '\'...')
         this.playing = true
-        player.play(fullFile, (err) => {
+        player.play(fullFile, { aplay: ['-D', device ] }, (err) => {
             if (err) {
                 this.logger.logger.error('audio: Exception: ' + err)
             } else {
