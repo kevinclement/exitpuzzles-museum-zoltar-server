@@ -113,7 +113,7 @@ module.exports = class CoinManager extends Manager {
 
     donationChange() {
         this.logger.log(this.logPrefix + 'detected donation...')
-        this.play("donation.wav")
+        this.play(["error.wav", "donation.wav"])
     }
 
     allCoins() {
