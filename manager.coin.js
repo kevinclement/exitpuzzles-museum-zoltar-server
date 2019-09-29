@@ -118,8 +118,13 @@ module.exports = class CoinManager extends Manager {
 
     allCoins() {
         this.logger.log(this.logPrefix + 'solved.')
-        this.play("success.wav")
-        this.printer.print(() => {})
+        this.play("solve-long.wav")
+
+        // print after a period of time so the success can play
+        setTimeout(() => {
+            this.printer.print(() => {})
+        },3500)
+
     }
 
     play(fName, cb) {
