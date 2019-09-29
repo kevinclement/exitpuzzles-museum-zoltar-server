@@ -6,7 +6,7 @@ module.exports = class CabinetManager extends Manager {
         // Bluetooth device name: ExitMuseumCabinet
         let bt = new (require('./serial.bluetooth'))({
             name: opts.name,
-            address: '80:7D:3A:BC:D6:32',
+            address: '3C:71:BF:84:D6:7A',
             channel: 1,
             logger: opts.logger
         });
@@ -116,7 +116,7 @@ module.exports = class CabinetManager extends Manager {
     }
 
     connected() {
-        this.bt.write('status');
+        this.bt.write('status')
 
         this.ref.child('info').update({
             isConnected: true,
