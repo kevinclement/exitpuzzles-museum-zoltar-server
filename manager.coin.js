@@ -123,7 +123,7 @@ module.exports = class CoinManager extends Manager {
         // print after a period of time so the success can play
         setTimeout(() => {
             this.printer.print(() => {})
-        },3500)
+        },2000)
 
     }
 
