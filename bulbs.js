@@ -6,10 +6,6 @@ module.exports = class Bulbs {
     this.logger = opts.logger
 
     this.connectToBulbs()
-
-    setTimeout(() => {
-        this.color("green")
-    }, 8000)
   }
 
   connectToBulbs() {
