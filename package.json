@@ -5,13 +5,15 @@
   "author": "Kevin Clement <kevin.clement@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "node index.js",
+    "dev": "sudo NOBLE_REPORT_ALL_HCI_EVENTS=1 node index.js",
     "verbose": "DEBUG=true node index.js",
     "stop": "sudo systemctl stop exitpuzzles.zoltar.service",
     "start": "sudo systemctl start exitpuzzles.zoltar.service",
+    "restart": "sudo systemctl restart exitpuzzles.zoltar.service",
     "status": "sudo systemctl status exitpuzzles.zoltar.service"
   },
   "dependencies": {
+    "@abandonware/noble": "^1.9.2-5",
     "bluetooth-serial-port": "^2.2.6",
     "escpos": "^2.5.2",
     "firebase": "^6.4.0",

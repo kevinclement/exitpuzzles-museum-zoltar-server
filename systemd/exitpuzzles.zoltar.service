@@ -3,7 +3,6 @@ Description=ExitPuzzles Zoltar node service
 After=syslog.target network.target
 
 [Service]
-User=pi
 Type=simple
 Restart=always
 RestartSec=7
@@ -15,6 +14,7 @@ StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=exitpuzzles-zoltar
 Environment=NODE_ENV=production
+Environment=NOBLE_REPORT_ALL_HCI_EVENTS=1
 
 [Install]
 WantedBy=multi-user.target
