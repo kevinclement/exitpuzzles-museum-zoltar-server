@@ -2,6 +2,8 @@ var noble = require('@abandonware/noble');
 let firebase = require('firebase');
 const { colors } = require('./bulbs.color');
 const { exec } = require('child_process');
+let fb = new (require('./firebase'))
+let ref = fb.db.ref('museum/devices/bulb/')
 
 let bulbs = {};
 process.argv.forEach((val, index) => {
@@ -15,11 +17,6 @@ process.argv.forEach((val, index) => {
 
     bulbs[name] = { color: color, friendly: friendly }
 });
-
-let config = { databaseURL: "https://exitpuzzles-admin-dev.firebaseio.com" }
-//let config = { databaseURL: "https://exitpuzzles-admin.firebaseio.com" }
-let db = firebase.initializeApp(config).database()
-let ref = db.ref('museum/devices/bulb/')
 
 var bulbsFound = 0;
 const DEV_ID = process.env.NOBLE_HCI_DEVICE_ID

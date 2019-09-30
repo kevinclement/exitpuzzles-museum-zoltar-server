@@ -15,6 +15,7 @@
   "dependencies": {
     "@abandonware/noble": "^1.9.2-5",
     "bluetooth-serial-port": "^2.2.6",
+    "child_process": "^1.0.2",
     "escpos": "^2.5.2",
     "firebase": "^6.4.0",
     "play-sound": "^1.1.3",
