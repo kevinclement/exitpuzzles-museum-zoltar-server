@@ -81,20 +81,20 @@ function connect(bulb) {
     peripheral.once('disconnect', (err) => {
         log(`${b.friendly} disconnected, reconnecting...`)
 
-        ref.child(b.friendly).update({ state: "disconnected" })
+        ref.child(b.friendly).set("disconnected");
 
         connect(b);
     })
 
     log(`connecting to ${b.friendly}`)
-    ref.child(b.friendly).update({ state: "connecting" });
+    ref.child(b.friendly).set("connecting");
 
     peripheral.connect(error => {
         if (error) {
             log(`ERROR: ${error} for ${b.friendly}`)
-            ref.child(b.friendly).update({ state: "error" })
+            ref.child(b.friendly).set("error");
         } else {
-            ref.child(b.friendly).update({ state: "connected" })
+            ref.child(b.friendly).set("connected");
             log(`${b.friendly} connected`)
         }
         
