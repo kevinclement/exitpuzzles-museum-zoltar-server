@@ -16,6 +16,9 @@ module.exports = class HandsManager extends Manager {
 
         super({ ...opts, bt: bt, handlers: handlers, incoming:incoming })
 
+        // hookup bulb handling
+        this.bulbs = new (require('./bulbs'))({ logger: opts.logger })
+
         // setup supported commands
         handlers['hands.reboot'] = (s,cb) => { 
             bt.write('reboot');
@@ -59,6 +62,12 @@ module.exports = class HandsManager extends Manager {
                     }
                 })
 
+                if (this.touching && this.bulbs.isWhite) {
+                    this.bulbs.on();
+                } else if (!this.touching && !this.bulbs.isWhite) {
+                    this.bulbs.off();
+                }
+
                 ref.child('info/build').update({
                     version: this.version,
                     date: this.buildDate,
@@ -81,6 +90,10 @@ module.exports = class HandsManager extends Manager {
         this.version = "unknown"
         this.gitDate = "unknown"
         this.buildDate = "unknown"
+    }
+
+    touchChanged() {
+
     }
 
     activity() {

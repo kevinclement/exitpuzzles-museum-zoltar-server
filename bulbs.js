@@ -3,7 +3,9 @@ const { fork } = require('child_process');
 const forks = []
 module.exports = class Bulbs {
   constructor(opts) {
+
     this.logger = opts.logger
+    this.isWhite = true;
 
     this.connectToBulbs()
   }
@@ -19,12 +21,16 @@ module.exports = class Bulbs {
     forks.forEach((f) => {
       f.send({ cmd: 'off' });
     });
+
+    this.isWhite = true;
   }
 
   on()  {
     forks.forEach((f) => {
       f.send({ cmd: 'on' });
     });
+
+    this.isWhite = false;
   }
 
   // red,green,blue
@@ -32,6 +38,8 @@ module.exports = class Bulbs {
     forks.forEach((f) => {
       f.send({ cmd: 'color', color: color });
     });
+
+    isWhite = color == 'white';
   }
 }
 
