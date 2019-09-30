@@ -1,6 +1,7 @@
 let fb = new (require('./firebase'))
 let logger = new (require('./logging'))
 let audio = new (require('./audio'))({ logger: logger })
+let bulbs = new (require('./bulbs'))({ logger: logger })
 
 let managers = [];
 // managers.push(new (require('./manager.bird'))({ name: 'bird', logger: logger, fb: fb }))
