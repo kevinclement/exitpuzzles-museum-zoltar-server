@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "sudo NOBLE_REPORT_ALL_HCI_EVENTS=1 node index.js",
-    "verbose": "DEBUG=true node index.js",
+    "verbose": "sudo DEBUG=true NOBLE_REPORT_ALL_HCI_EVENTS=1 node index.js",
     "stop": "sudo systemctl stop exitpuzzles.zoltar.service",
     "start": "sudo systemctl start exitpuzzles.zoltar.service",
     "restart": "sudo systemctl restart exitpuzzles.zoltar.service",

@@ -26,7 +26,7 @@ const white = Buffer.from([0x56, 0x00, 0x00, 0x00, 0xff, 0x0f, 0xaa, 0x3b, 0x07,
 // reset devices
 exec(`hciconfig -a hci${DEV_ID} reset`, (error, stdout, stderr) => {
     if (error) {
-      log(`exec error: ${error}`);
+      err(`exec error: ${error}`);
       return;
     }
 
@@ -91,7 +91,7 @@ function connect(bulb) {
 
     peripheral.connect(error => {
         if (error) {
-            log(`ERROR: ${error} for ${b.friendly}`)
+            err(`ERROR: ${error} for ${b.friendly}`)
             ref.child(b.friendly).set("error");
         } else {
             ref.child(b.friendly).set("connected");
@@ -115,7 +115,7 @@ function write(bulb) {
 
     b.p.writeHandle(0x000b, b.data, false, error => {
         if (error) {
-            log(`BLE: Write Error: ${error}`)
+            err(`BLE: Write Error for ${b.friendly}: ${error}`)
         } else {
             //log(`wrote: updating ${b.friendly} (${b.p.address})`)
             b.wrote = true;
@@ -168,5 +168,10 @@ function turnOff() {
 }
 
 function log(str) {
+    if (process.env.DEBUG) {
+        console.log(`${prefix} ${str}`)
+    }
+}
+function err(str) {
     console.log(`${prefix} ${str}`)
 }
