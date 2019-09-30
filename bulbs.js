@@ -12,9 +12,9 @@ module.exports = class Bulbs {
 
   connectToBulbs() {
     const bulbs = require('./bulbs.devices');
-    forks.push(fork('bulbs.handler', bulbs.getBulbs(0,3),   {env: {NOBLE_HCI_DEVICE_ID: 0}}));
-    forks.push(fork('bulbs.handler', bulbs.getBulbs(3,6),   {env: {NOBLE_HCI_DEVICE_ID: 1}}));
-    // forks.push(fork('bulbs.handler', bulbs.getBulbs(12,18), {env: {NOBLE_HCI_DEVICE_ID: 2}}));
+    forks.push(fork('bulbs.handler', bulbs.getBulbs(0,6),   {env: {NOBLE_HCI_DEVICE_ID: 0}}));
+    forks.push(fork('bulbs.handler', bulbs.getBulbs(6,12),  {env: {NOBLE_HCI_DEVICE_ID: 1}}));
+    forks.push(fork('bulbs.handler', bulbs.getBulbs(12,18), {env: {NOBLE_HCI_DEVICE_ID: 2}}));
   }
 
   off()  {
