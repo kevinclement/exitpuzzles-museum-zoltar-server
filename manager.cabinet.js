@@ -35,6 +35,11 @@ module.exports = class CabinetManager extends Manager {
                 } else {
                     // go ahead and update the db and let it know we're disconnected since we will time out
                     this.ref.child('info').update({ isConnected: false })
+
+                    // tell blootooth to disconnecto make reconnect faster
+                    setTimeout(() => {
+                        bt.disconnect();
+                    }, 10000) 
                 }
                 cb()
             });

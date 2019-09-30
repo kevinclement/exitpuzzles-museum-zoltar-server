@@ -21,7 +21,7 @@ module.exports = class Bluetooth {
         // only log the connection tries for a few times so we don't spam the logs since it 
         // will be offline most cases
         if (CONNECTION_TRIES > 0) {
-            this.log('Connecting to ' + this.address + ' ...')
+            this.log(this.logPrefix + 'Connecting to ' + this.address + ' ...')
             CONNECTION_TRIES--;
         } else {
             if (CONNECTION_TRIES === 0) {
@@ -47,6 +47,12 @@ module.exports = class Bluetooth {
             // tell consumer that we're connected
             if (cb) cb();
         });
+    }
+
+    disconnect() {
+        this.logger.log(this.logPrefix + 'Disconnecting ' + this.address + '...');
+        this.rfcomm && this.rfcomm.close();
+        this.connectionStartTime = null;
     }
 
     setOutputCallback(cb) {
