@@ -85,7 +85,7 @@ module.exports = class CoinManager extends Manager {
         this.serial = bt
         this.logger = opts.logger
         this.audio = opts.audio
-        this.printer = opts.printer
+        this.printer = new (require('./printer'))({ logger: logger })
 
         this.solved = false
         this.version = "unknown"
