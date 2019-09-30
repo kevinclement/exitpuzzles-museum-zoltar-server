@@ -7,7 +7,7 @@
 ```speaker-test -D hw -c 0 -twav -s 1```
 
 ## Make a new soft device
-### nano ~/.asoundrc
+### nano /etc/asound.conf
 ```
 pcm.softvol {
     type            softvol
