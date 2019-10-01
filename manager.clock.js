@@ -19,7 +19,7 @@ module.exports = class ClockManager extends Manager {
         super({ ...opts, bt: bt, handlers: handlers, incoming:incoming })
 
         // setup supported commands
-        handlers['cabinet.open'] = (s,cb) => {
+        handlers['clock.open'] = (s,cb) => {
             bt.write('solve', (err) => {
                 if (err) {
                     s.ref.update({ 'error': err });
