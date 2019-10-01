@@ -6,8 +6,32 @@ module.exports = class Bulbs {
 
     this.logger = opts.logger
     this.isWhite = true;
+    this.idol = -1;
 
     this.connectToBulbs()
+
+    // TMP: do this for real ----------------------------
+    // this.cabRef = opts.fb.db.ref('museum/devices/cabinet').on('value', (snapshot) => {
+    //   let cabinet = snapshot.val()
+    //   if (cabinet == null) return
+
+    //   if (this.idol != -1 && this.idol != cabinet.idol) {
+    //     console.log('Detected idol change, changing lights to match');
+    //     var color = 'blue';
+    //     if (cabinet.idol == 3) {
+    //       color = 'red';
+    //     }
+    //     if (cabinet.idol == 4) {
+    //       color = 'green';
+    //     }
+    //     this.color(color);
+        
+    //     console.log(`Change to ${cabinet.idol}`);
+    //   }
+
+    //   this.idol = cabinet.idol;
+    // })
+    // ---------------------------------------------------
   }
 
   connectToBulbs() {
@@ -39,23 +63,22 @@ module.exports = class Bulbs {
       f.send({ cmd: 'color', color: color });
     });
 
-    isWhite = color == 'white';
+    this.isWhite = color == 'white';
   }
 }
 
 // when process  is kill, cleanup it's children
 function exitHandler(options, exitCode) {
-    if (options.cleanup) { 
-      console.log('cleaning up spawned processes...');
-      forks.forEach((f) => {
+    console.log('cleaning up spawned processes...');
+    forks.forEach((f) => {
         process.kill(f.pid)
-      });
-    }
-    if (options.exit) process.exit();
+    });
+
+    process.exit();
 }
 
-process.on('exit', exitHandler.bind(null,{cleanup:true}));
-process.on('SIGINT', exitHandler.bind(null, {exit:true}));
-process.on('SIGUSR1', exitHandler.bind(null, {exit:true}));
-process.on('SIGUSR2', exitHandler.bind(null, {exit:true}));
-process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
+process.on('exit', exitHandler.bind(null, {}));
+// process.on('SIGINT', exitHandler.bind(null, {}));
+// process.on('SIGUSR1', exitHandler.bind(null, {}));
+// process.on('SIGUSR2', exitHandler.bind(null, {}));
+// process.on('uncaughtException', exitHandler.bind(null, {}));

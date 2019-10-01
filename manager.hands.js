@@ -17,7 +17,7 @@ module.exports = class HandsManager extends Manager {
         super({ ...opts, bt: bt, handlers: handlers, incoming:incoming })
 
         // hookup bulb handling
-        this.bulbs = new (require('./bulbs'))({ logger: opts.logger })
+        this.bulbs = new (require('./bulbs'))({ logger: opts.logger, fb:opts.fb })
 
         // setup supported commands
         handlers['hands.reboot'] = (s,cb) => { 
