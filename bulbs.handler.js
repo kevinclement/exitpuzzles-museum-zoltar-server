@@ -9,7 +9,7 @@ let bulbs = {};
 process.argv.forEach((val, index) => {
     if (index < 2) return;
 
-    // format is -> name:color
+    // format is -> name:color:friendly
     let parts = val.split(':');
     let name = parts[0];
     let color = parts[1];
