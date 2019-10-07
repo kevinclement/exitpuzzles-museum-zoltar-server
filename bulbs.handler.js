@@ -1,5 +1,4 @@
 var noble = require('@abandonware/noble');
-let firebase = require('firebase');
 const { colors } = require('./bulbs.color');
 const { exec } = require('child_process');
 let fb = new (require('./firebase'))
