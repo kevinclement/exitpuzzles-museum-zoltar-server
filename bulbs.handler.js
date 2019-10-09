@@ -81,8 +81,11 @@ function connect(bulb) {
         log(`${b.friendly} disconnected, reconnecting...`)
 
         ref.child(b.friendly).set("disconnected");
+        setTimeout( ()=>{
+            console.log(`reconnecting ${b.friendly} now`);
+            connect(b);
+        }, 10000)
 
-        connect(b);
     })
 
     log(`connecting to ${b.friendly}`)
