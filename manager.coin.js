@@ -15,6 +15,7 @@ module.exports = class CoinManager extends Manager {
         let handlers = {};
 
         super({ ...opts, bt: bt, handlers: handlers, incoming:incoming })
+        this.printer = new (require('./printer'))({ logger: opts.logger })
 
         // setup supported commands
         handlers['zoltar.increment'] = (s,cb) => { 
@@ -28,6 +29,9 @@ module.exports = class CoinManager extends Manager {
         handlers['zoltar.reboot'] = (s,cb) => { 
             bt.write('reboot');
             cb();
+        }
+        handlers['zoltar.printFeed'] = (s,cb) => { 
+            this.printer.feed(cb)
         }
 
         // setup supported device output parsing
@@ -85,7 +89,6 @@ module.exports = class CoinManager extends Manager {
         this.serial = bt
         this.logger = opts.logger
         this.audio = opts.audio
-        this.printer = new (require('./printer'))({ logger: opts.logger })
 
         this.solved = false
         this.version = "unknown"

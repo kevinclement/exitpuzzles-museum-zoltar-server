@@ -28,4 +28,16 @@ module.exports = class Printer {
                 .close()
         })
     }
+
+    feed(cb) {
+        this.logger.log(this.logPrefix + 'feeding paper...')
+        device.open(() => {
+            printer
+                .feed(3)
+            
+            if (cb) { 
+                cb()
+            }
+        })
+    }
 }
