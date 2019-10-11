@@ -44,13 +44,13 @@ fb.db.ref('museum/operations').orderByChild('completed').equalTo(null).on("child
 
 // update started time and set a ping timer
 fb.db.ref('museum/status/zoltar').update({
-    piStarted: (new Date()).toLocaleString(),
-    piPing: (new Date()).toLocaleString()
+    started: (new Date()).toLocaleString(),
+    ping: (new Date()).toLocaleString()
 })
 
 // heartbeat timer
 setInterval(()  => {
     fb.db.ref('museum/status/zoltar').update({
-      piPing: (new Date()).toLocaleString()
+      ping: (new Date()).toLocaleString()
     })
 }, 30000)
