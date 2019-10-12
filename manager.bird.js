@@ -55,6 +55,24 @@ module.exports = class BirdManager extends Manager {
             });
         }
 
+        handlers['bird.play'] = (s,cb) => {
+            bt.write('play', (err) => {
+                if (err) {
+                    s.ref.update({ 'error': err });
+                }
+                cb()
+            });
+        }
+
+        handlers['bird.stop'] = (s,cb) => {
+            bt.write('stop', (err) => {
+                if (err) {
+                    s.ref.update({ 'error': err });
+                }
+                cb()
+            });
+        }
+
         handlers['bird.reboot'] = (s,cb) => {
             bt.write('reboot', (err) => {
                 if (err) {
