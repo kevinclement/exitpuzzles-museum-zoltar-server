@@ -34,6 +34,7 @@ module.exports = class Printer {
         device.open(() => {
             printer
                 .feed(3)
+                .close()
             
             if (cb) { 
                 cb()
