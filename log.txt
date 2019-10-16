@@ -1,0 +1,59 @@
+Oct 15 14:03:48 zoltar exitpuzzles-zoltar[523]: info: pi: received op bird.light
+Oct 15 14:04:03 zoltar exitpuzzles-zoltar[523]: info: pi: received op bird.light
+Oct 15 14:04:18 zoltar exitpuzzles-zoltar[523]: info: pi: received op bird.open
+Oct 15 14:44:50 zoltar exitpuzzles-zoltar[523]: info: pi: received op stairs.reboot
+Oct 15 14:52:43 zoltar exitpuzzles-zoltar[523]: info: pi: received op cabinet.reboot
+Oct 15 14:52:43 zoltar exitpuzzles-zoltar[523]: info: handler: cabinet: handling cabinet.reboot ...
+Oct 15 14:52:43 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: > reboot
+Oct 15 14:52:53 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: Disconnecting 3C:71:BF:84:D6:7A...
+Oct 15 14:52:53 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: bluetooth: cabinet: Connecting to 3C:71:BF:84:D6:7A ...
+Oct 15 14:53:03 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: Connecting time out. Restarting connection.
+Oct 15 14:53:03 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: bluetooth: cabinet: Connecting to 3C:71:BF:84:D6:7A ...
+Oct 15 14:53:04 zoltar exitpuzzles-zoltar[523]: noble warning: unknown handle 12 disconnected!
+Oct 15 14:53:13 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: Connecting time out. Restarting connection.
+Oct 15 14:53:13 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: bluetooth: cabinet: Connecting to 3C:71:BF:84:D6:7A ...
+Oct 15 14:53:15 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: Connected.
+Oct 15 14:53:15 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: > status
+Oct 15 14:53:16 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: < status=version:13caf7c,gitDate:2019-09-29 16:03:53,buildDate:2019-09-29 16:04:01,solved:false,lights:false,magnet:true,idol:0
+Oct 15 14:54:50 zoltar exitpuzzles-zoltar[523]: info: pi: received op clock.motor
+Oct 15 14:55:14 zoltar exitpuzzles-zoltar[523]: info: pi: received op clock.reboot
+Oct 15 15:12:55 zoltar exitpuzzles-zoltar[523]: info: pi: received op clock.motor
+Oct 15 15:22:43 zoltar exitpuzzles-zoltar[523]: info: pi: received op clock.reboot
+Oct 15 15:24:02 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: bluetooth: cabinet: Connecting to 3C:71:BF:84:D6:7A ...
+Oct 15 15:24:04 zoltar exitpuzzles-zoltar[523]: noble warning: unknown handle 12 disconnected!
+Oct 15 15:24:12 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: Connecting time out. Restarting connection.
+Oct 15 15:24:12 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: bluetooth: cabinet: Connecting to 3C:71:BF:84:D6:7A ...
+Oct 15 15:24:22 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: Connecting time out. Restarting connection.
+Oct 15 15:24:22 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: bluetooth: cabinet: Connecting to 3C:71:BF:84:D6:7A ...
+Oct 15 15:24:32 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: Connecting time out. Restarting connection.
+Oct 15 15:24:32 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: bluetooth: cabinet: Connecting to 3C:71:BF:84:D6:7A ...
+Oct 15 15:24:33 zoltar exitpuzzles-zoltar[523]: info: pi: received op clock.motor
+Oct 15 15:24:42 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: Connecting time out. Restarting connection.
+Oct 15 15:24:42 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: bluetooth: cabinet: Connecting to 3C:71:BF:84:D6:7A ...
+Oct 15 15:24:52 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: Connecting time out. Restarting connection.
+Oct 15 15:24:53 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: bluetooth: cabinet: Connecting to 3C:71:BF:84:D6:7A ...
+Oct 15 15:25:03 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: Sleeping logs for reconnect.
+Oct 15 15:25:19 zoltar exitpuzzles-zoltar[523]: info: pi: received op clock.reboot
+Oct 15 15:25:38 zoltar exitpuzzles-zoltar[523]: info: pi: received op cabinet.reboot
+Oct 15 15:25:43 zoltar exitpuzzles-zoltar[523]: info: handler: cabinet: handling cabinet.reboot ...
+Oct 15 15:25:43 zoltar exitpuzzles-zoltar[523]: error: bluetooth: cabinet: Trying to write to device but not yet connected.
+Oct 15 15:25:43 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: > reboot
+Oct 15 15:25:53 zoltar exitpuzzles-zoltar[523]: info: bluetooth: cabinet: Disconnecting 3C:71:BF:84:D6:7A...
+Oct 15 16:01:35 zoltar exitpuzzles-zoltar[523]: info: pi: received op zoltar.increment
+Oct 15 16:01:35 zoltar exitpuzzles-zoltar[523]: info: handler: zoltar: handling zoltar.increment ...
+Oct 15 16:01:35 zoltar exitpuzzles-zoltar[523]: info: direct: zoltar: > increment
+Oct 15 16:01:42 zoltar exitpuzzles-zoltar[523]: info: pi: received op zoltar.increment
+Oct 15 16:01:43 zoltar exitpuzzles-zoltar[523]: info: handler: zoltar: handling zoltar.increment ...
+Oct 15 16:01:43 zoltar exitpuzzles-zoltar[523]: info: direct: zoltar: > increment
+Oct 15 16:02:09 zoltar exitpuzzles-zoltar[523]: info: pi: received op zoltar.increment
+Oct 15 16:02:09 zoltar exitpuzzles-zoltar[523]: info: handler: zoltar: handling zoltar.increment ...
+Oct 15 16:02:09 zoltar exitpuzzles-zoltar[523]: info: direct: zoltar: > increment
+Oct 15 16:02:35 zoltar exitpuzzles-zoltar[523]: info: pi: received op laser.enable
+Oct 15 16:02:35 zoltar exitpuzzles-zoltar[523]: info: handler: laser: handling laser.enable ...
+Oct 15 16:02:35 zoltar exitpuzzles-zoltar[523]: info: bluetooth: laser: > enable
+Oct 15 16:02:45 zoltar exitpuzzles-zoltar[523]: info: pi: received op laser.disable
+Oct 15 16:58:24 zoltar exitpuzzles-zoltar[523]: info: pi: received op clock.motor
+Oct 15 17:00:06 zoltar exitpuzzles-zoltar[523]: info: pi: received op clock.reboot
+Oct 15 17:01:05 zoltar exitpuzzles-zoltar[523]: info: pi: received op clock.reboot
+Oct 15 17:01:15 zoltar exitpuzzles-zoltar[523]: info: pi: received op clock.motor
+Oct 15 17:01:38 zoltar exitpuzzles-zoltar[523]: info: pi: received op clock.reboot

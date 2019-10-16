@@ -41,6 +41,17 @@ module.exports = class LaserManager extends Manager {
                 cb()
             });
         }
+        handlers['laser.reboot'] = (s,cb) => {
+            // go ahead and update the db and let it know we're disconnected since we will time out
+            ref.child('info').update({ isConnected: false })
+
+            bt.write('reset', (err) => {
+                if (err) {
+                    s.ref.update({ 'error': err });
+                }
+                cb()
+            });
+        }
 
         // setup supported device output parsing
         incoming.push(

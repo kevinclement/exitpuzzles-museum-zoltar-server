@@ -14,7 +14,6 @@ StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=exitpuzzles-zoltar
 Environment=NODE_ENV=production
-Environment=NOBLE_REPORT_ALL_HCI_EVENTS=1
 
 [Install]
 WantedBy=multi-user.target

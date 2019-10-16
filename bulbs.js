@@ -68,15 +68,3 @@ module.exports = class Bulbs {
     this.isWhite = color == 'white';
   }
 }
-
-// when process  is kill, cleanup it's children
-function exitHandler(options, exitCode) {
-    console.log('cleaning up spawned processes...');
-    forks.forEach((f) => {
-        process.kill(f.pid)
-    });
-
-    process.exit();
-}
-
-process.on('exit', exitHandler.bind(null, {}));
