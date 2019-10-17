@@ -23,29 +23,29 @@ var prefix = DEV_ID + ":"
 const white = Buffer.from([0x56, 0x00, 0x00, 0x00, 0xff, 0x0f, 0xaa, 0x3b, 0x07, 0x00, 0x01])
 
 // reset devices
-// exec(`hciconfig -a hci${DEV_ID} reset`, (error, stdout, stderr) => {
-//     if (error) {
-//       err(`exec error: ${error}`);
-//       return;
-//     }
-
-//     // setup scanning
-//     noble.on('stateChange', state => {
-//         if (state === 'poweredOn') {
-//             log(`Looking for bulbs...`)
-//             noble.startScanning(['ffe5'])
-//         }
-//     })
-   
-// });
-
-// setup scanning
-noble.on('stateChange', state => {
-    if (state === 'poweredOn') {
-        log(`Looking for bulbs...`)
-        noble.startScanning(['ffe5'])
+exec(`hciconfig -a hci${DEV_ID} reset`, (error, stdout, stderr) => {
+    if (error) {
+      err(`exec error: ${error}`);
+      return;
     }
-})
+
+    // setup scanning
+    noble.on('stateChange', state => {
+        if (state === 'poweredOn') {
+            log(`Looking for bulbs...`)
+            noble.startScanning(['ffe5'])
+        }
+    })
+   
+});
+
+// // setup scanning
+// noble.on('stateChange', state => {
+//     if (state === 'poweredOn') {
+//         log(`Looking for bulbs...`)
+//         noble.startScanning(['ffe5'])
+//     }
+// })
 
 // handle commands
 process.on('message', (msg) => {
