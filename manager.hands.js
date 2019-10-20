@@ -16,20 +16,15 @@ module.exports = class HandsManager extends Manager {
 
         super({ ...opts, bt: bt, handlers: handlers, incoming:incoming })
 
-        // hookup bulb handling
-        this.bulbs = new (require('./bulbs'))({ logger: opts.logger, fb:opts.fb })
-
         // setup supported commands
         handlers['hands.reboot'] = (s,cb) => { 
             bt.write('reboot');
             cb();
         }
+        
         handlers['hands.toggle'] = (s,cb) => { 
-            bt.write('mock');
-
             // optimistic update to db, so it doesn't flip back and forth
             ref.update({ mock: !this.mock })
-
             cb();
         }
 
@@ -61,12 +56,6 @@ module.exports = class HandsManager extends Manager {
                             break
                     }
                 })
-
-                if (this.touching && this.bulbs.isWhite) {
-                    this.bulbs.on();
-                } else if (!this.touching && !this.bulbs.isWhite) {
-                    this.bulbs.off();
-                }
 
                 ref.child('info/build').update({
                     version: this.version,

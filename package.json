@@ -5,8 +5,8 @@
   "author": "Kevin Clement <kevin.clement@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "sudo node index.js",
-    "verbose": "sudo DEBUG=true node index.js",
+    "dev": "node index.js",
+    "verbose": "DEBUG=true node index.js",
     "tail": "tail -f /var/log/syslog | grep exitpuzzles-zoltar",
     "stop": "sudo systemctl stop exitpuzzles.zoltar.service",
     "start": "sudo systemctl start exitpuzzles.zoltar.service",
@@ -14,9 +14,7 @@
     "status": "sudo systemctl status exitpuzzles.zoltar.service"
   },
   "dependencies": {
-    "@abandonware/noble": "^1.9.2-5",
     "bluetooth-serial-port": "^2.2.6",
-    "child_process": "^1.0.2",
     "escpos": "^2.5.2",
     "firebase": "^6.4.0",
     "play-sound": "^1.1.3",
