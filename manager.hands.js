@@ -23,8 +23,10 @@ module.exports = class HandsManager extends Manager {
         }
         
         handlers['hands.toggle'] = (s,cb) => { 
+            this.mock = !this.mock
+
             // optimistic update to db, so it doesn't flip back and forth
-            ref.update({ mock: !this.mock })
+            ref.update({ mock: this.mock })
             cb();
         }
 
