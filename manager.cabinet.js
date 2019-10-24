@@ -1,4 +1,4 @@
-let Manager = require('./manager')
+let Manager = require('./manager.bluetooth')
 
 module.exports = class CabinetManager extends Manager {
     constructor(opts) {
