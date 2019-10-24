@@ -2,35 +2,48 @@ let Manager = require('./manager')
 
 module.exports = class CoinManager extends Manager {
     constructor(opts) {
-        let bt = new (require('./serial.direct'))({
-            name: opts.name,
-            baudRate: 9600,
-            logger: opts.logger,
-            dev: '/dev/ttyCOIN'
-        });
-
-        let ref = opts.fb.db.ref('museum/devices/zoltar')
-
         let incoming = [];
         let handlers = {};
 
-        super({ ...opts, bt: bt, handlers: handlers, incoming:incoming })
+        let ref = opts.fb.db.ref('museum/devices/zoltar')
+
+        super({ 
+            ...opts,
+            ref: ref,
+            dev:'/dev/ttyCOIN',
+            baudRate: 9600,
+            handlers: handlers,
+            incoming:incoming,
+        })
+
         this.printer = new (require('./printer'))({ logger: opts.logger })
 
         // setup supported commands
-        handlers['zoltar.increment'] = (s,cb) => { 
-            bt.write('increment');
-            cb();
+        handlers['zoltar.increment'] = (s,cb) => {
+            this.write('increment', err => {
+                if (err) {
+                    s.ref.update({ 'error': err });
+                }
+                cb()
+            });
         }
         handlers['zoltar.decrement'] = (s,cb) => { 
-            bt.write('decrement');
-            cb();
+            this.write('decrement', err => {
+                if (err) {
+                    s.ref.update({ 'error': err });
+                }
+                cb()
+            });
         }
-        handlers['zoltar.reboot'] = (s,cb) => { 
-            bt.write('reboot');
-            cb();
+        handlers['zoltar.reboot'] = (s,cb) => {
+            this.write('reboot', err => {
+                if (err) {
+                    s.ref.update({ 'error': err });
+                }
+                cb()
+            });
         }
-        handlers['zoltar.printFeed'] = (s,cb) => { 
+        handlers['zoltar.printFeed'] = (s,cb) => {
             this.printer.feed(cb)
         }
 
@@ -42,9 +55,6 @@ module.exports = class CoinManager extends Manager {
                 m[1].split(',').forEach((s)=> {
                     let p = s.split(/:(.+)/);
                     switch(p[0]) {
-                        case "solved": 
-                            this.solved = (p[1] === 'true')
-                            break
                         case "version": 
                             this.version = p[1]
                             break
@@ -53,6 +63,10 @@ module.exports = class CoinManager extends Manager {
                             break 
                         case "buildDate": 
                             this.buildDate = p[1]
+                            break
+
+                        case "solved": 
+                            this.solved = (p[1] === 'true')
                             break
                         case "coins": 
                             let nCoins = parseInt(p[1]);
@@ -85,9 +99,6 @@ module.exports = class CoinManager extends Manager {
             }
         });
 
-        this.ref = ref
-        this.serial = bt
-        this.logger = opts.logger
         this.audio = opts.audio
 
         this.solved = false
@@ -96,12 +107,9 @@ module.exports = class CoinManager extends Manager {
         this.buildDate = "unknown"
         this.coins = 0
         this.donations = 0
-    }
 
-    activity() {
-         this.ref.child('info').update({
-             lastActivity: (new Date()).toLocaleString()
-        })
+        // now connect to serial
+        this.connect()
     }
 
     coinChange() {
@@ -127,7 +135,6 @@ module.exports = class CoinManager extends Manager {
         setTimeout(() => {
             this.printer.print(() => {})
         },2000)
-
     }
 
     play(fName, cb) {
@@ -135,34 +142,6 @@ module.exports = class CoinManager extends Manager {
             if (cb) {
                 cb()
             }
-        })
-    }
-
-    connecting() {
-        // NOTE: while connecting, mark device as disabled, since it defaults to that
-        this.ref.child('info').update({
-            isConnected: false
-        })
-    }
-
-    connected() {
-        // No need to get status since its arduino and it restarts on connection
-
-        // TMP -------------------------------
-        // setTimeout(() => {
-        //     this.bt.write('i');
-        // }, 1000);
-        // setTimeout(() => {
-        //     this.bt.write('i');
-        // }, 2000);
-        // setTimeout(() => {
-        //     this.bt.write('i');
-        // }, 3000);
-        // -----------------------------------
-
-        this.ref.child('info').update({
-            isConnected: true,
-            lastActivity: (new Date()).toLocaleString()
         })
     }
 }
