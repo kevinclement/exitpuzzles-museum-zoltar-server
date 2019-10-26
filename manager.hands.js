@@ -23,10 +23,10 @@ module.exports = class HandsManager extends Manager {
         }
         
         handlers['hands.toggle'] = (s,cb) => { 
-            this.mock = !this.mock
+            this.toggle = !this.toggle
 
             // optimistic update to db, so it doesn't flip back and forth
-            ref.update({ mock: this.mock })
+            ref.update({ toggle: this.toggle })
             cb();
         }
 
@@ -52,7 +52,7 @@ module.exports = class HandsManager extends Manager {
                             this.touching = (p[1] === 'true')
                             break
                         case "mock": 
-                            this.mock = (p[1] === 'true')
+                            this.toggle = (p[1] === 'true')
                             break
                     }
                 })
@@ -65,7 +65,7 @@ module.exports = class HandsManager extends Manager {
 
                 ref.update({
                     touching: this.touching,
-                    mock: this.mock
+                    toggle: this.toggle
                 })
             }
         });
@@ -75,7 +75,7 @@ module.exports = class HandsManager extends Manager {
         this.buildDate = "unknown"
 
         this.touching = false
-        this.mock = false
+        this.toggle = false
 
         // now connect to serial
         this.connect()
