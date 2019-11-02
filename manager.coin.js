@@ -15,11 +15,13 @@ module.exports = class CoinManager extends Manager {
             handlers: handlers,
             incoming:incoming,
         })
-
+        this.run = opts.run
+        this.forced = false
         this.printer = new (require('./printer'))({ logger: opts.logger })
 
         // setup supported commands
         handlers['zoltar.increment'] = (s,cb) => {
+            this.forced = true
             this.write('increment', err => {
                 if (err) {
                     s.ref.update({ 'error': err });
@@ -36,6 +38,7 @@ module.exports = class CoinManager extends Manager {
             });
         }
         handlers['zoltar.reboot'] = (s,cb) => {
+            this.forced = false
             this.write('reboot', err => {
                 if (err) {
                     s.ref.update({ 'error': err });
@@ -129,6 +132,7 @@ module.exports = class CoinManager extends Manager {
 
     allCoins() {
         this.logger.log(this.logPrefix + 'solved.')
+        this.run.zoltarSolved(this.forced)
         this.play("solve-long.wav")
 
         // print after a period of time so the success can play

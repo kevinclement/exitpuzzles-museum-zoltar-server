@@ -1,12 +1,13 @@
 let fb = new (require('./firebase'))
 let logger = new (require('./logging'))
 let audio = new (require('./audio'))({ logger: logger })
+let run = new (require('./run'))({ logger: logger, db:fb.db })
 
 let managers = [];
 // NOTE: cabinet is now managed by map.  leaving here for now as a fallback
 // managers.push(new (require('./manager.cabinet'))({ name: 'cabinet', logger: logger, fb: fb }))
 managers.push(new (require('./manager.laser'))({ name: 'laser', logger: logger, fb: fb }))
-managers.push(new (require('./manager.coin'))({ name: 'zoltar', logger: logger, fb: fb, audio: audio }))
+managers.push(new (require('./manager.coin'))({ name: 'zoltar', logger: logger, fb: fb, audio: audio, run: run }))
 managers.push(new (require('./manager.hands'))({ name: 'hands', logger: logger, fb: fb }))
 
 // might want to turn this off while doing dev, so I have a flag for it
