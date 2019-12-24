@@ -24,7 +24,7 @@ module.exports = class Printer {
                 .align('ct')
                 .raster(img)
                 .cut()
-                .feed(10)
+                .feed(7)
                 .close()
         })
     }
